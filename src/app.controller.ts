@@ -14,8 +14,6 @@ export class AppController {
   @Header('Accept', 'text/plain')
   @Header('Content-type', 'image/svg+xml')
   async renderSvgFromUrl(@Req() req: RawBase64EncodedRequest<Request>): Promise<string> {
-    console.log(req.base64Encoded);
-    console.log(req.base64Decoded);
     const url = req.base64Decoded;
     return this.appService.renderSvgFromUrl(url).then(buffer => buffer.toString('utf8'));
   }
