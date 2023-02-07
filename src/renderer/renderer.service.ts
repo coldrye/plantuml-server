@@ -5,25 +5,30 @@ import { promises as fs } from 'fs';
 import * as path from 'path';
 import * as uuid from 'uuid';
 
+// TODO refactor to env
 const TMP_DIR: string = path.resolve('./tmp');
 
 @Injectable()
-export class AppService {
+export class RendererService {
   async renderSvgFromUrl(url: string): Promise<Buffer> {
+    // TODO use SHA256 hash of url for caching purposes
     return axios.get(url).then(response => this.renderSvg(response.data));
   }
 
   async renderPngFromUrl(url: string): Promise<Buffer> {
+    // TODO use SHA256 hash of url for caching purposes
     return axios.get(url).then(response => this.renderPng(response.data));
   }
 
   async renderSvg(document: string): Promise<Buffer> {
+    // TODO use SHA256 hash of url for caching purposes
     const { source, target } = this.determineSourceAndTarget('svg');
     const cmd = this.determineCmd('svg', source, target);
     return this.render(document, source, target, cmd);
   }
 
   async renderPng(document: string): Promise<Buffer> {
+    // TODO use SHA256 hash of url for caching purposes
     const { source, target } = this.determineSourceAndTarget('png');
     const cmd = this.determineCmd('png', source, target);
     return this.render(document, source, target, cmd);
